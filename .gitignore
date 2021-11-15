@@ -1,3 +1,4 @@
 *.pyc
 *.pyo
 fin-py
+setup.sh
