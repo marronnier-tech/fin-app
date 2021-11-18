@@ -1,15 +1,25 @@
 from flask import Flask
 from flask import request
+from flask import jsonify
+from flask import url_for
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return 'hello, world'
+    return {
+            'page': url_for('index'),
+            'ping': 'pong',
+            'nyan': 'meow',
+            }
 
 @app.route('/balance')
 def get_balance():
-    return 'balance'
+    dic = {
+        'page': url_for('get_balance'),
+        'nyao': 'meow'
+        }
+    return jsonify(dic)
 
 @app.route('/past/<int:year>/<int:month>')
 def get_past(year, month):
