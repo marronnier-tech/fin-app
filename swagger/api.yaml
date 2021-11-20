@@ -7,6 +7,9 @@ paths:
   /balance:
     get:
       summary: "今月残り自由額"
+      description: ""
+      produces:
+        - "application/json"
       responses:
         200:
           description: "OK"
