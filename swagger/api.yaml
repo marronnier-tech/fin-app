@@ -1,0 +1,27 @@
+swagger: "2.0"
+info:
+  description: "This is finance app."
+  version: "0.0.1"
+  title: "My Finance App"
+paths:
+  /balance:
+    get:
+      summary: "今月残り自由額"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: object
+            properties:
+              year:
+                type: "integer"
+                format: "int64"
+                example: 2021
+              month:
+                type: "integer"
+                format: "int64"
+                example: 12
+              usable:
+                type: "integer"
+                format: "int64"
+                example: 20300
