@@ -28,3 +28,33 @@ paths:
                 type: "integer"
                 format: "int64"
                 example: 20300
+  /detail/present:
+    get:
+      summary: "今月の利用明細"
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: array
+            properties:
+              id:: "integer"
+                format: "int64"
+                example: 1
+  /detail/past/{year}/{month}:
+    get:
+      summary: "過去の指定月の利用明細"
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            type: array
+            properties:
+              id:: "integer"
+                format: "int64"
+                example: 1
