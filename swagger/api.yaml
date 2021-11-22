@@ -1,0 +1,120 @@
+swagger: "2.0"
+info:
+    description: "This is finance app."
+version: "0.0.1"
+title: "My Finance App"
+paths:
+    /free:
+        get:
+            summary: "今月残り自由額"
+    description: ""
+    produces:
+        - "application/json"
+    responses:
+        "200":
+            description: "OK"
+        schema:
+            $ref: "#/definitions/Free"
+/detail/present:
+    get:
+        summary: "今月の利用明細"
+    description: ""
+    produces:
+        - "application/json"
+    responses:
+        "200":
+            description: "OK"
+        schema:
+            type: "array"
+            items:
+                $ref: "#definitions/Detail"
+/detail/past/{year}/{month}:
+    get:
+        summary: "過去の指定月の利用明細"
+    description: ""
+    produces:
+        - "application/json"
+    responses:
+        "200":
+            description: "OK"
+        schema:
+            type: array
+            items:
+                $ref: "#definitions/Detail"
+/free/{year}/{month}:
+    get:
+        summary: "未来月の残り自由額"
+    description: ""
+    produces:
+        - "application/json"
+    responses:
+        "200":
+            description: "OK"
+        schema:
+            $ref: "#/definitions/Free"
+/category/past/{year}/{month}:
+    get:
+        summary: "過去月の種別利用額"
+        description: ""
+        produces:
+            - "application/json"
+        responses:
+            "200":
+                description: "OK"
+                schema:
+                    type: "array"
+                    items:
+                        "#/definitions/Category"
+/category/past/{year}:
+    get:
+        summary: "過去年度の種別利用額"
+        description: ""
+        produces:
+            - "application/json"
+        responses:
+            "200":
+                description: "OK"
+                schema:
+                    type: "array"
+                    items:
+                        "#/definitions/Category"
+definitions:
+    Free:
+        type: "object"
+        properties:
+            year:
+                type: "integer"
+                format: "int64"
+            month:
+                type: "integer"
+                format: "int64"
+            usable:
+                type: "integer"
+                format: "int64"
+    Detail:
+        type: "object"
+        properties:
+            id:
+                type: "integer"
+                format: "int64"
+            category:
+                type: "string"
+            money:
+                type: "integer"
+                format: "int64"
+            isplus:
+                type: "boolean"
+                default: false
+            description: 
+            type: "string"
+    Category:
+        type: "object"
+        properties:
+            category:
+                type: "string"
+            money:
+                type: "integer"
+                format: "int64"
+            rate:
+                type: "integer"
+                format: "int64"
