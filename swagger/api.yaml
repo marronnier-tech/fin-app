@@ -1,120 +1,268 @@
 swagger: "2.0"
 info:
-    description: "This is finance app."
-version: "0.0.1"
-title: "My Finance App"
+  description: "This is finance app."
+  version: "0.0.1"
+  title: "My Finance App"
 paths:
-    /free:
-        get:
-            summary: "今月残り自由額"
-    description: ""
-    produces:
-        - "application/json"
-    responses:
-        "200":
-            description: "OK"
-        schema:
-            $ref: "#/definitions/Free"
-/detail/present:
+  /free:
     get:
-        summary: "今月の利用明細"
-    description: ""
-    produces:
+      summary: "今月残り自由額"
+      description: ""
+      produces:
         - "application/json"
-    responses:
+      responses:
         "200":
-            description: "OK"
-        schema:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Free"
+  /detail/present:
+    get:
+      summary: "今月の利用明細"
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
             type: "array"
             items:
-                $ref: "#definitions/Detail"
-/detail/past/{year}/{month}:
+              $ref: "#definitions/Detail"
+  /detail/past/{year}/{month}:
     get:
-        summary: "過去の指定月の利用明細"
-    description: ""
-    produces:
-        - "application/json"
-    responses:
+      summary: "過去の指定月の利用明細"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "year"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "month"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
         "200":
-            description: "OK"
-        schema:
+          description: "OK"
+          schema:
             type: array
             items:
-                $ref: "#definitions/Detail"
-/free/{year}/{month}:
+              $ref: "#definitions/Detail"
+  /free/{year}/{month}:
     get:
-        summary: "未来月の残り自由額"
-    description: ""
-    produces:
-        - "application/json"
-    responses:
+      summary: "未来月の残り自由額"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "year"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "month"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
         "200":
-            description: "OK"
-        schema:
+          description: "OK"
+          schema:
             $ref: "#/definitions/Free"
-/category/past/{year}/{month}:
+  /category/past/{year}/{month}:
     get:
-        summary: "過去月の種別利用額"
-        description: ""
-        produces:
-            - "application/json"
-        responses:
-            "200":
-                description: "OK"
-                schema:
-                    type: "array"
-                    items:
-                        "#/definitions/Category"
-/category/past/{year}:
+      summary: "過去月の種別利用額"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+      - name: "year"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "month"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Category"
+  /category/past/{year}:
     get:
-        summary: "過去年度の種別利用額"
-        description: ""
-        produces:
-            - "application/json"
-        responses:
-            "200":
-                description: "OK"
-                schema:
-                    type: "array"
-                    items:
-                        "#/definitions/Category"
+      summary: "過去年度の種別利用額"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+      - name: "year"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Category"
+  /plan/repeat/:
+    post:
+      summary: "指定期間の繰り返しの使途設定"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "繰り返しの使途設定"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            startYear:
+              type: "integer"
+              format: "int64"
+              example: 2021
+            startMonth:
+              type: "integer"
+              format: "int64"
+              example: 8
+            endYear:
+              type: "integer"
+              format: "int64"
+              example: 2022
+            endMonth:
+              type: "integer"
+              format: "int64"
+              example: 3
+            money:
+              type: "integer"
+              format: "int64"
+              example: 14000
+            category:
+              type: "string"
+              example: "奨学金"
+            channel:
+              type: "string"
+              example: "三菱UFJ銀行"
+      responses:
+        "200":
+          description: "OK"
+  /plan/shot/{year}/{month}:
+    post:
+      summary: "指定月の使途設定"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "year"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "month"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "指定月の使途設定"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            money:
+              type: "integer"
+              format: "int64"
+              example: 22000
+            category:
+              type: "string"
+              example: "クレジットカード"
+            channel:
+              type: "string"
+              example: "三菱UFJ銀行"
+      responses:
+        "200":
+          description: "OK"
+  /detail/category/{id}:
+    post:
+      summary: "利用明細分類の指定"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "明細の分類を設定する"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            money:
+              type: "integer"
+              format: "int64"
+              example: 10000
+            category:
+              type: "string"
+              example: "衣類"
+      responses:
+        "200":
+          description: "OK"
 definitions:
-    Free:
-        type: "object"
-        properties:
-            year:
-                type: "integer"
-                format: "int64"
-            month:
-                type: "integer"
-                format: "int64"
-            usable:
-                type: "integer"
-                format: "int64"
-    Detail:
-        type: "object"
-        properties:
-            id:
-                type: "integer"
-                format: "int64"
-            category:
-                type: "string"
-            money:
-                type: "integer"
-                format: "int64"
-            isplus:
-                type: "boolean"
-                default: false
-            description: 
-            type: "string"
-    Category:
-        type: "object"
-        properties:
-            category:
-                type: "string"
-            money:
-                type: "integer"
-                format: "int64"
-            rate:
-                type: "integer"
-                format: "int64"
+  Free:
+    type: "object"
+    properties:
+      year:
+        type: "integer"
+        format: "int64"
+      month:
+        type: "integer"
+        format: "int64"
+      usable:
+        type: "integer"
+        format: "int64"
+  Detail:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      category:
+        type: "string"
+      money:
+        type: "integer"
+        format: "int64"
+      isplus:
+        type: "boolean"
+        default: false
+      description: 
+        type: "string"
+  Category:
+    type: "object"
+    properties:
+      category:
+        type: "string"
+      money:
+        type: "integer"
+        format: "int64"
+      rate:
+        type: "integer"
+        format: "int64"
