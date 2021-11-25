@@ -4,7 +4,7 @@ info:
   version: "0.0.1"
   title: "My Finance App"
 paths:
-  /free:
+  /usable:
     get:
       summary: "今月残り自由額"
       description: ""
@@ -14,7 +14,7 @@ paths:
         "200":
           description: "OK"
           schema:
-            $ref: "#/definitions/Free"
+            $ref: "#/definitions/Usable"
   /detail/present:
     get:
       summary: "今月の利用明細"
@@ -27,7 +27,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#definitions/Detail"
+              $ref: "#/definitions/Detail"
   /detail/past/{year}/{month}:
     get:
       summary: "過去の指定月の利用明細"
@@ -49,10 +49,10 @@ paths:
         "200":
           description: "OK"
           schema:
-            type: array
+            type: "array"
             items:
-              $ref: "#definitions/Detail"
-  /free/{year}/{month}:
+              $ref: "#/definitions/Detail"
+  /usable/{year}/{month}:
     get:
       summary: "未来月の残り自由額"
       description: ""
@@ -73,7 +73,7 @@ paths:
         "200":
           description: "OK"
           schema:
-            $ref: "#/definitions/Free"
+            $ref: "#/definitions/Usable"
   /category/past/{year}/{month}:
     get:
       summary: "過去月の種別利用額"
@@ -227,7 +227,7 @@ paths:
         "200":
           description: "OK"
 definitions:
-  Free:
+  Usable:
     type: "object"
     properties:
       year:
