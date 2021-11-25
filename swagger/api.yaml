@@ -78,6 +78,110 @@ paths:
                     type: "array"
                     items:
                         "#/definitions/Category"
+/plan/repeat/
+    post:
+        summary: "指定期間の繰り返しの使途設定"
+    description: ""
+    produces:
+        - "application/json"
+    parameters:
+        - in: "body"
+          name: "body"
+          description: "繰り返しの使途設定"
+          required: true
+          schema:
+              type: "object"
+              properties:
+                  startYear:
+                      type: "integer"
+                      format: "int64"
+                      example: 2021
+                  startMonth:
+                      type: "integer"
+                      format: "int64"
+                      example: 8
+                  endYear:
+                      type: "integer"
+                      format: "int64"
+                      example: 2022
+                  endMonth:
+                      type: "integer"
+                      format: "int64"
+                      example: 3
+                  money:
+                      type: "integer"
+                      format: "int64"
+                      example: 14000
+                  category:
+                      type: "string"
+                      example: "奨学金"
+                  channel:
+                      type: "string"
+                      example: "三菱UFJ銀行"
+    responses:
+        "200":
+            description: "OK"
+/plan/shot/{year}/{month}:
+    post:
+        summary: "指定月の使途設定"
+    description: ""
+    produces:
+        - "application/json"
+    parameters:
+        - in: "body"
+          name: "body"
+          description: "指定月の使途設定"
+          required: true
+          schema:
+              type: "object"
+              properties:
+                  money:
+                      type: "integer"
+                      format: "int64"
+                      example: 22000
+                  category:
+                      type: "string"
+                      example: "クレジットカード"
+                  channel:
+                      type: "string"
+                      example: "三菱UFJ銀行"
+    responses:
+        "200":
+            description: "OK"
+    parameters:
+        - in: "body"
+          name: "body"
+          description: "指定月の使途設定"
+          required: true
+          schema:
+              $ref: "#/definitions/Plan"
+    responses:
+        "200":
+            description: "OK"
+/detail/category/{id}:
+    post:
+        summary: "利用明細分類の指定"
+    description: ""
+    produces:
+        - "application/json"
+    parameters:
+        - in: "body"
+          name: "body"
+          description: "明細の分類を設定する"
+          required: true
+          schema:
+              type: "object"
+              properties:
+                  money:
+                      type: "integer"
+                      format: "int64"
+                      example: 10000
+                  category:
+                      type: "string"
+                      example: "衣類"
+    responses:
+        "200":
+            description: "OK"
 definitions:
     Free:
         type: "object"
