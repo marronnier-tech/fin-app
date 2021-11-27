@@ -21,6 +21,15 @@ def get_usable():
         }
     return jsonify(res)
 
+@app.route('/usable/<int:year>/<int:month>')
+def future_usable(year, month):
+    res = {
+            'year': year,
+            'month': month,
+            'usable': 70300,
+            }
+    return jsonify(res)
+
 res_detail = [{
         'id': 2,
         'category': '食費',
@@ -44,20 +53,40 @@ def get_past(year, month):
             }
     return jsonify(res)
 
-@app.route('/future/<int:year>/<int:month>', methods=['GET', 'POST'])
-def future(year, month):
-    if request.method == 'POST':
-        return f'post year:{year} month:{month}'
-    else:
-        return f'get year: {year} month:{month}'
+@app.route('/detail/category/<int:id>', methods=['POST'])
+def set_category(id):
+    return '', 201
 
-@app.route('/class/<int:history_id>', methods=['POST', 'PATCH'])
-def classify(history_id):
-    if request.method == 'POST':
-        return f'post id:{history_id}'
-    else:
-        return f'patch id:{history_id}'
+res_category = [{
+    'category': '医療費',
+    'subtotal': 50300,
+    'rate': 30,
+    }]
 
+@app.route('/category/past/<int:year>')
+def past_category_year(year):
+    res = {
+            'year': year,
+            'categories': res_category,
+            }
+    return jsonify(res)
+
+@app.route('/category/past/<int:year>/<int:month>')
+def past_category_month(year, month):
+    res = {
+            'year': year,
+            'month': month,
+            'categories': res_category,
+            }
+    return jsonify(res)
+
+@app.route('/repeat', methods=['POST'])
+def repeat():
+    return '', 201
+
+@app.route('/shot/<int:year>/<int:month>', methods=['POST'])
+def shot(year, month):
+    return '', 201
 
 if __name__ == '__main__':
     app.run()
