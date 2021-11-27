@@ -1,9 +1,8 @@
-from flask import Flask
-from flask import request
-from flask import jsonify
-from flask import url_for
+from flask import Flask, request, jsonify, url_for
 
 app = Flask(__name__)
+
+app.config['JSON_AS_ASCII'] = False
 
 @app.route('/')
 def index():
@@ -13,17 +12,37 @@ def index():
             'nyan': 'meow',
             }
 
-@app.route('/balance')
-def get_balance():
-    dic = {
-        'page': url_for('get_balance'),
-        'nyao': 'meow'
+@app.route('/usable')
+def get_usable():
+    res = {
+        'year': 2021,
+        'month': 3,
+        'usable': 42500,
         }
-    return jsonify(dic)
+    return jsonify(res)
 
-@app.route('/past/<int:year>/<int:month>')
+res_detail = [{
+        'id': 2,
+        'category': '食費',
+        'money': 4250,
+        'is_plus': 'false',
+        'description': '西友ネットスーパー',
+        'channel': 'UFJ-VISAデビット',
+        }]
+
+@app.route('/detail/present')
+def get_detail():
+    res = res_detail
+    return jsonify(res)
+
+@app.route('/detail/past/<int:year>/<int:month>')
 def get_past(year, month):
-    return f'Year: {year}, Month: {month}'
+    res = {
+            'year': year,
+            'month': month,
+            'details': res_detail
+            }
+    return jsonify(res)
 
 @app.route('/future/<int:year>/<int:month>', methods=['GET', 'POST'])
 def future(year, month):
