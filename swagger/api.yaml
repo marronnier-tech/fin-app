@@ -15,6 +15,28 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/Usable"
+  /usable/{year}/{month}:
+    get:
+      summary: "未来月の残り自由額"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "year"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "month"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Usable"
   /detail/present:
     get:
       summary: "今月の利用明細"
@@ -49,22 +71,28 @@ paths:
         "200":
           description: "OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Detail"
-  /usable/{year}/{month}:
+            type: "object"
+            properties:
+              year:
+                type: "integer"
+                format: "int64"
+                example: 2021
+              month:
+                type: "integer"
+                format: "int64"
+                example: 3
+              details:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Detail"
+  /category/past/{year}:
     get:
-      summary: "未来月の残り自由額"
+      summary: "過去年度の種別利用額"
       description: ""
       produces:
-      - "application/json"
+        - "application/json"
       parameters:
       - name: "year"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "month"
         in: "path"
         required: true
         type: "integer"
@@ -73,7 +101,16 @@ paths:
         "200":
           description: "OK"
           schema:
-            $ref: "#/definitions/Usable"
+            type: "object"
+            properties:
+              year:
+                type: "integer"
+                format: "int64"
+                example: 2021
+              categories:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Category"
   /category/past/{year}/{month}:
     get:
       summary: "過去月の種別利用額"
@@ -95,29 +132,50 @@ paths:
         "200":
           description: "OK"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Category"
-  /category/past/{year}:
-    get:
-      summary: "過去年度の種別利用額"
+            type: "object"
+            properties:
+              year:
+                type: "integer"
+                format: "int64"
+                example: 2021
+              month:
+                type: "integer"
+                format: "int64"
+                example: 3
+              categories:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Category"
+  /detail/category/{id}:
+    post:
+      summary: "利用明細分類の指定"
       description: ""
       produces:
-        - "application/json"
+      - "application/json"
       parameters:
-      - name: "year"
+      - name: "id"
         in: "path"
         required: true
         type: "integer"
         format: "int64"
+      - in: "body"
+        name: "body"
+        description: "明細の分類を設定する"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            money:
+              type: "integer"
+              format: "int64"
+              example: 10000
+            category:
+              type: "string"
+              example: "衣類"
       responses:
-        "200":
-          description: "OK"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Category"
-  /plan/repeat/:
+        "201":
+          description: "CREATED"
+  /repeat:
     post:
       summary: "指定期間の繰り返しの使途設定"
       description: ""
@@ -158,9 +216,9 @@ paths:
               type: "string"
               example: "三菱UFJ銀行"
       responses:
-        "200":
-          description: "OK"
-  /plan/shot/{year}/{month}:
+        "201":
+          description: "CREATED"
+  /shot/{year}/{month}:
     post:
       summary: "指定月の使途設定"
       description: ""
@@ -195,37 +253,8 @@ paths:
               type: "string"
               example: "三菱UFJ銀行"
       responses:
-        "200":
-          description: "OK"
-  /detail/category/{id}:
-    post:
-      summary: "利用明細分類の指定"
-      description: ""
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - in: "body"
-        name: "body"
-        description: "明細の分類を設定する"
-        required: true
-        schema:
-          type: "object"
-          properties:
-            money:
-              type: "integer"
-              format: "int64"
-              example: 10000
-            category:
-              type: "string"
-              example: "衣類"
-      responses:
-        "200":
-          description: "OK"
+        "201":
+          description: "CREATED"
 definitions:
   Usable:
     type: "object"
@@ -254,6 +283,8 @@ definitions:
         type: "boolean"
         default: false
       description: 
+        type: "string"
+      channel:
         type: "string"
   Category:
     type: "object"
