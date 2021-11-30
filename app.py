@@ -39,7 +39,12 @@ res_detail = [{
         'channel': 'UFJ-VISAデビット',
         }]
 
-@app.route('/detail/present')
+@app.route('/detail/present/used')
+def get_detail():
+    res = res_detail
+    return jsonify(res)
+
+@app.route('/detail/present/plan')
 def get_detail():
     res = res_detail
     return jsonify(res)
