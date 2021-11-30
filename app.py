@@ -98,6 +98,16 @@ def shot():
         return '', 201
     else:
         return '', 201
+
+@app.route('/income/repeat', methods=['GET'])
+def income():
+    res = {
+            'income': 203323,
+            }
+    return jsonify(res)
+
+@app.route('/income/shot', methods=['POST'])
+def income_shot():
     return '', 201
 
 if __name__ == '__main__':
