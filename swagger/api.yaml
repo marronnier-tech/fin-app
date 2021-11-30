@@ -98,6 +98,35 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/definitions/Detail"
+  /detail/category/{id}:
+    post:
+      summary: "利用明細分類の指定"
+      description: ""
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "明細の分類を設定する"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            money:
+              type: "integer"
+              format: "int64"
+              example: 10000
+            category:
+              type: "string"
+              example: "衣類"
+      responses:
+        "201":
+          description: "CREATED"
   /category/past/{year}:
     get:
       summary: "過去年度の種別利用額"
@@ -159,35 +188,6 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/definitions/Category"
-  /detail/category/{id}:
-    post:
-      summary: "利用明細分類の指定"
-      description: ""
-      produces:
-      - "application/json"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - in: "body"
-        name: "body"
-        description: "明細の分類を設定する"
-        required: true
-        schema:
-          type: "object"
-          properties:
-            money:
-              type: "integer"
-              format: "int64"
-              example: 10000
-            category:
-              type: "string"
-              example: "衣類"
-      responses:
-        "201":
-          description: "CREATED"
   /plan/repeat:
     post:
       summary: "指定期間の繰り返しの使途設定"
@@ -275,7 +275,7 @@ paths:
           description: "CREATED"
   /plan/shot:
     post:
-      summary: "指定月の予定支出設定"
+      summary: "指定日の予定支出設定"
       description: ""
       produces:
       - "application/json"
@@ -292,7 +292,7 @@ paths:
         format: "int64"
       - in: "body"
         name: "body"
-        description: "指定月の予定支出設定"
+        description: "指定日の予定支出設定"
         required: true
         schema:
           type: "object"
@@ -370,17 +370,12 @@ paths:
       responses:
         "201":
           description: "CREATED"
-  /income/repeat/{flag}:
+  /income/repeat:
     get:
       summary: "今月の月収"
       description: ""
       produces:
         - "application/json"
-      parameters:
-      - name: "flag"
-        in: "path"
-        required: true
-        type: "string"
       responses:
         "200":
           description: "OK"
@@ -394,16 +389,13 @@ paths:
               flag:
                 type: "string"
                 example: "main"
+  /income/shot:
     post:
       summary: "臨時収入追加"
       description: ""
       produces:
         - "application/json"
       parameters:
-      - name: "flag"
-        in: "path"
-        required: true
-        type: "string"
       - in: "body"
         name: "body"
         description: ""
@@ -418,6 +410,18 @@ paths:
             category:
               type: "string"
               example: "撮影会"
+            year:
+              type: "integer"
+              format: "int64"
+              example: 2021
+            month:
+              type: "integer"
+              format: "int64"
+              example: 4
+            day:
+              type: "integer"
+              format: "int64"
+              example: 30
       responses:
         "200":
           description: "OK"
