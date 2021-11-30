@@ -40,12 +40,12 @@ res_detail = [{
         }]
 
 @app.route('/detail/present/used')
-def get_detail():
+def get_detail_used():
     res = res_detail
     return jsonify(res)
 
 @app.route('/detail/present/plan')
-def get_detail():
+def get_detail_plan():
     res = res_detail
     return jsonify(res)
 
@@ -92,12 +92,12 @@ def repeat():
     else:
         return '', 201
 
-@app.route('/plan/shot', methods=['POST'])
+@app.route('/plan/shot', methods=['POST', 'PATCH'])
 def shot():
-    return '', 201
-
-@app.route('/shot/<int:year>/<int:month>', methods=['POST'])
-def shot(year, month):
+    if request.method == 'POST':
+        return '', 201
+    else:
+        return '', 201
     return '', 201
 
 if __name__ == '__main__':
