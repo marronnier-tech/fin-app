@@ -85,8 +85,15 @@ def past_category_month(year, month):
             }
     return jsonify(res)
 
-@app.route('/repeat', methods=['POST'])
+@app.route('/plan/repeat', methods=['POST', 'PATCH'])
 def repeat():
+    if request.method == 'POST':
+        return '', 201
+    else:
+        return '', 201
+
+@app.route('/plan/shot', methods=['POST'])
+def shot():
     return '', 201
 
 @app.route('/shot/<int:year>/<int:month>', methods=['POST'])
