@@ -12,7 +12,7 @@ def index():
             'nyan': 'meow',
             }
 
-@app.route('/usable')
+@app.route('/usable/present')
 def get_usable():
     res = {
         'year': 2021,
@@ -39,8 +39,13 @@ res_detail = [{
         'channel': 'UFJ-VISAデビット',
         }]
 
-@app.route('/detail/present')
-def get_detail():
+@app.route('/detail/present/used')
+def get_detail_used():
+    res = res_detail
+    return jsonify(res)
+
+@app.route('/detail/present/plan')
+def get_detail_plan():
     res = res_detail
     return jsonify(res)
 
@@ -80,12 +85,29 @@ def past_category_month(year, month):
             }
     return jsonify(res)
 
-@app.route('/repeat', methods=['POST'])
+@app.route('/plan/repeat', methods=['POST', 'PATCH'])
 def repeat():
-    return '', 201
+    if request.method == 'POST':
+        return '', 201
+    else:
+        return '', 201
 
-@app.route('/shot/<int:year>/<int:month>', methods=['POST'])
-def shot(year, month):
+@app.route('/plan/shot', methods=['POST', 'PATCH'])
+def shot():
+    if request.method == 'POST':
+        return '', 201
+    else:
+        return '', 201
+
+@app.route('/income/repeat', methods=['GET'])
+def income():
+    res = {
+            'income': 203323,
+            }
+    return jsonify(res)
+
+@app.route('/income/shot', methods=['POST'])
+def income_shot():
     return '', 201
 
 if __name__ == '__main__':
