@@ -12,7 +12,7 @@ def index():
             'nyan': 'meow',
             }
 
-@app.route('/usable')
+@app.route('/usable/present')
 def get_usable():
     res = {
         'year': 2021,
