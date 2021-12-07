@@ -110,5 +110,22 @@ def income():
 def income_shot():
     return '', 201
 
+@app.route('/user', methods=['GET', 'POST', 'PATCH'])
+def user_info():
+    if request.method == 'GET':
+        res = {
+                'email': 'test@github.com'
+                }
+        return jsonify(res)
+    elif request.method == 'POST':
+        return '', 201
+    else:
+        res = {
+                'user_id': 1,
+                'email': 'test@github.com',
+                'pass': '********'
+                }
+        return '', 201
+                
 if __name__ == '__main__':
     app.run()
