@@ -445,14 +445,16 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "email"
+        - name: "body"
           in: "body"
           required: true
-          type: "string"
-        - name: "pass"
-          in: "body"
-          required: true
-          type: "string"
+          schema:
+            type: "object"
+            properties:
+              email:
+                type: "string"
+              pass:
+                type: "string"
       responses:
         "200":
           description: "OK"
@@ -462,19 +464,19 @@ paths:
       produces:
         - "application/json"
       parameters:
-        - name: "id"
+        - name: "body"
           in: "body"
           required: true
-          type: "integer"
-          format: "int64"
-        - name: "email"
-          in: "body"
-          required: true
-          type: "string"
-        - name: "pass"
-          in: "body"
-          required: true
-          type: "string"
+          schema:
+            type: "object"
+            properties:
+              user_id:
+                type: "integer"
+                format: "int64"
+              email:
+                type: "string"
+              pass:
+                type: "string"
       responses:
         "200":
           description: "OK"
