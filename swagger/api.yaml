@@ -425,6 +425,59 @@ paths:
       responses:
         "200":
           description: "OK"
+  /user:
+    get:
+      summary: "ユーザー情報取得"
+      description: ""
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            type: "object"
+            properties:
+              email:
+                type: "string"
+    post:
+      summary: "ユーザー情報登録"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "body"
+          required: true
+          type: "string"
+        - name: "pass"
+          in: "body"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
+    patch:
+      summary: "ユーザー情報修正"
+      description: ""
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "body"
+          required: true
+          type: "integer"
+          format: "int64"
+        - name: "email"
+          in: "body"
+          required: true
+          type: "string"
+        - name: "pass"
+          in: "body"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "OK"
 definitions:
   Usable:
     type: "object"
