@@ -1,4 +1,6 @@
 from flask import Flask, request, jsonify, url_for
+from assets.database import db_session
+from assets.models import Data
 
 app = Flask(__name__)
 
@@ -113,10 +115,8 @@ def income_shot():
 @app.route('/user', methods=['GET', 'POST', 'PATCH'])
 def user_info():
     if request.method == 'GET':
-        res = {
-                'email': 'test@github.com'
-                }
-        return jsonify(res)
+        data = db_session.query(Data.name, Data.article, Data.timestamp).all()
+        return data
     elif request.method == 'POST':
         return '', 201
     else:
